@@ -1,0 +1,102 @@
+<%
+timer = function(tstr){
+	ret = "";
+	pass_time = Math.floor(new Date() / 1000) - tstr;
+	if(pass_time < 2){
+		ret = "<i class='fa fa-clock-o'></i> about a second ago";
+	}
+	else if(pass_time > 1 && pass_time < 60){
+		ret = "<i class='fa fa-clock-o'></i> less than a minute ago";
+	}
+	else{
+		r = Math.ceil(pass_time/60);
+		if (r >= 1 && r < 60)
+		{
+			// within a minute;
+			if (r > 1)
+			{
+				ret = "<i class='fa fa-clock-o'></i> about "+r+" minutes ago";
+			}
+			else
+			{
+				ret = "<i class='fa fa-clock-o'></i> about a minute ago";
+			}
+		}
+		else if(r >= 60 && r < 1440)
+		{
+			// within an hour
+			if((r/60) > 1)
+			{
+				ret = "<i class='fa fa-clock-o'></i> about "+Math.ceil(r/60)+" hours ago";
+			}
+			else
+			{
+				ret = "<i class='fa fa-clock-o'></i> about a hour ago";
+			}
+		}
+		else if(r >= 1440 && r < 10080)
+		{
+			//within a day
+			if((r/1440) > 1)
+			{
+				ret = "<i class='fa fa-clock-o'></i> about "+Math.ceil(r/1440)+" days ago";
+			}
+			else
+			{
+				ret = "<i class='fa fa-clock-o'></i> about a day ago";
+			}
+		}
+		else if(r >= 10080 && r < 40320)
+		{
+			//within a week
+			if((r/10080) > 1)
+			{
+				ret = "<i class='fa fa-clock-o'></i> about "+Math.ceil(r/10080)+" weeks ago";
+			}
+			else
+			{
+				ret = "<i class='fa fa-clock-o'></i> about a week ago";
+			}
+		}
+		else if (r >= 40320 && r < 483840)
+		{
+			//within a month
+			if((r/40320) > 1)
+			{
+				ret = "<i class='fa fa-clock-o'></i> about "+Math.ceil(r/40320)+" months ago";
+			}
+			else
+			{
+				ret = "<i class='fa fa-clock-o'></i> about a month ago";
+			}
+		}
+		else
+		{
+			//within a year;
+			if((r/483840) > 1)
+			{
+				ret = "<i class='fa fa-clock-o'></i> about "+Math.ceil(r/483840)+" years ago";
+			}
+			else
+			{
+				ret = "<i class='fa fa-clock-o'></i> about a year ago";
+			}
+		}
+	}
+	return ret;
+}
+isSel = function(arr, val){
+arrs = arr.split(',');
+start = 0;
+isFound = false;
+while (start < arrs.length){
+	if(val == arrs[start]){
+		isFound = true;
+		break;
+	}
+	else{}
+	start++;
+}
+return isFound;
+}
+%>

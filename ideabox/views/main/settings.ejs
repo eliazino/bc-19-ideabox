@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="cosmic">
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>settings</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/flexslider.css"/>
+    <link href="assets/bxslider/jquery.bxslider.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/animate.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+
+      <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+	<% include ../dependencies/functions %>
+  </head>
+
+  <body>
+    <!--header start-->
+    
+    
+    
+    
+     <% include ../dependencies/head %>
+    <!--header end-->
+    <!--breadcrumbs start-->
+	
+	<style>
+.avatarset
+{
+}
+.avatarset ul
+{
+	padding:3px;
+}
+.avatarset ul li
+{
+	display:inline-block;
+	padding:6px;
+	list-style:none;
+	cursor:pointer;
+	padding-bottom:7px;
+}
+.avatarset ul li:hover
+{
+	opacity:.5;
+}
+</style>
+	
+	
+      <div style="height:100px; background:#2C3E50; padding-top:15px; padding-left:100px;"><h4 style="color:#fff"><i class="fa fa-gears"></i> Settings</h4></div>
+    <!--breadcrumbs end-->
+
+    <!--container start--><div class="registration-bg">
+	<div style="padding-right:25px; padding-left:25px; padding-bottom:60px;">
+	<div style="padding:20px;">
+		<h4><i class="fa fa-user"></i> Change Your avatar</h4>
+		<blockquote style="background:#fff">
+		<span style="font-weight:bolder">selected</span> <span id="setIM"><img src='<% if (user[0].avatar === ''){ %> <%- 'avatar/dude.png' %> <%} else { %> <%- user[0].avatar %><% } %>'/></span>
+		<br/><br/>
+		<div style="background:#FBFBFB; overflow:auto" class="avatarset">
+		<ul>
+			<li><img src="avatar/Aviator.png" onClick="setIm(this.src,'<%- user[0].username %>','<%= key %>')"></li>
+			<li><img src="avatar/Baldie.png" onClick="setIm(this.src,'<%- user[0].username %>','<%= key %>')"></li>
+			<li><img src="avatar/Blonde.png" onClick="setIm(this.src,'<%- user[0].username %>','<%= key %>')"></li>
+			<li><img src="avatar/Brunnete.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/chef.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/doctor.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/dude.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/miss big eyes.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/miss long neck.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/police.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/pretty face.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/pretty male.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/queen.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/red head.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/sherif.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+			<li><img src="avatar/superman.png" onClick="setIm(this.src,'<%- user[0].username %>', '<%= key %>')"></li>
+		</ul>
+		</div>
+		</blockquote>
+	</div>
+	<style>
+	.clister li{
+		list-style:none;
+		padding:6px;
+		color:black;
+		cursor:pointer;
+		font-size:14px;
+		font-weight:bolder;
+	}
+	.clister li:hover{
+		opacity:.5;
+	}
+	.clister li .fa{
+		color:#ccc;
+	}
+	.selected{
+	color:#468847 !important;
+	}
+	</style>
+	<div style="padding:20px; padding-top:0px">
+		<h4><i class="fa fa-list-alt"></i> Manage your Idea Cards</h4>
+		<blockquote style="background:#fff">
+		<h4>Click the card to select, click again to dis-select it</h4>
+		<input type="hidden" value="" id ="cards" />
+		<ul class="clister">
+		<% for(i=0; i < categ.length; i++){ %>
+			<li onclick="setcard(<%= categ[i].id %>)"><i id="check<%= categ[i].id %>" class="fa fa-check-square-o<% if(isSel(user[0].cards, categ[i].id)){ %> selected<% } %>"></i> <%= categ[i].card %></li>
+		<% } %>
+		</ul>
+		<button class="btn btn-primary" onclick="updateCards('<%= user[0].username %>', '<%= key %>', this)">Update selected</button>
+		</blockquote>
+	
+	
+	</div>
+	
+	
+	
+	
+     </div>
+	 </div>
+    <!--container end-->
+
+     <!--footer start-->
+  
+    <!-- footer end -->
+    <!--small footer start -->
+    
+    
+    
+     include ../dependencies/footer %>
+    
+    
+    <!--small footer end-->
+
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/hover-dropdown.js"></script>
+    <script defer src="js/jquery.flexslider.js"></script>
+    <script type="text/javascript" src="assets/bxslider/jquery.bxslider.js"></script>
+	<script src="self/siteplayer.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/link-hover.js"></script>
+
+
+     <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+
+
+    <script src="js/wow.min.js"></script>
+    <script>
+        wow = new WOW(
+          {
+            boxClass:     'wow',      // default
+            animateClass: 'animated', // default
+            offset:       0          // default
+          }
+        )
+        wow.init();
+	initcard('<%- user[0].cards %>');
+    </script>
+
+  </body>
+</html>
