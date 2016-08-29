@@ -60,19 +60,6 @@ function stringQ(cards){
 	}
 }
 
-/*
-*
-*Route every 404 error to error page
-*
-*/
-
-
-app.use(function(req, res, next){
-  // the status option, or res.statusCode = 404
-  // are equivalent, however with the option we
-  // get the "status" local available as well
-  res.render('main/error', { status: 404, url: req.url });
-});
 
 /*
 *
@@ -86,19 +73,19 @@ app.get('/', function(req, res) {
 	username = ses.user;
 	sessionID = ses.sessionID;
 	//var dataBundle = [];
-	console.log(username);
+	//console.log(username);
 	if(username != 'undefined' && sessionID != 'undefined'){
 		connection.getConnection(function(err, connection) {
 			var sql = 'select*FROM user where username = '+ connection.escape(username);
   			connection.query( sql, function(err, rows) {
   				if(err){
-  					console.log(err);
+  					//console.log(err);
   				}
   				else{
   					if(rows.length > 0){
   						//console.log(rows[0].surname);
   						cardCond = stringQ(rows[0].cards)
-  						console.log(cardCond);
+  						//console.log(cardCond);
   						//dataBundle.push(rows[0]);
   						var sql = '';
   						if (cardCond === ''){
@@ -159,11 +146,13 @@ app.post('/addcomment', function(req, res){
 	comment = req.body.comment;
 	var dpost = Math.floor(new Date() / 1000);
 	connection.getConnection(function(err, pool){
-		query = "insert into comments (idea_id, comment, user, comment_date) values("+pool.escape(ideaId)+","+pool.escape(comment)+","+pool.escape(user)+","+pool.escape(dpost)+")";
-		pool.query(query, function(err, rows){
-			if(err) console.log(err);
+		if(user != 'undefined'){
+			query = "insert into comments (idea_id, comment, user, comment_date) values("+pool.escape(ideaId)+","+pool.escape(comment)+","+pool.escape(user)+","+pool.escape(dpost)+")";
+			pool.query(query, function(err, rows){
+				if(err) console.log(err);
 			res.send("Okay");
 		});
+		}
 	});
 });
 
@@ -179,19 +168,19 @@ app.get('/index', function(req, res) {
 	username = ses.user;
 	sessionID = ses.sessionID;
 	//var dataBundle = [];
-	console.log(username);
+	//console.log(username);
 	if(username !== undefined && sessionID != undefined){
 		connection.getConnection(function(err, connection) {
 			var sql = 'select*FROM user where username = '+ connection.escape(username);
   			connection.query( sql, function(err, rows) {
   				if(err){
-  					console.log(err);
+  					//console.log(err);
   				}
   				else{
   					if(rows.length > 0){
   						//console.log(rows[0].surname);
   						cardCond = stringQ(rows[0].cards)
-  						console.log(cardCond);
+  						//console.log(cardCond);
   						//dataBundle.push(rows[0]);
   						var sql = '';
   						if (cardCond === ''){
@@ -269,7 +258,7 @@ app.get('/dashboard', function(req, res) {
 			var sql = 'select*FROM user where username = '+ connection.escape(username);
   			connection.query( sql, function(err, rows) {
   				if(err){
-  					console.log(err);
+  					//console.log(err);
   				}
   				else{
   					if(rows.length > 0){
@@ -334,7 +323,7 @@ app.post('/search', function(req, res) {
 			var sql = 'select*FROM user where username = '+ connection.escape(username);
   			connection.query( sql, function(err, rows) {
   				if(err){
-  					console.log(err);
+  					//console.log(err);
   				}
   				else{
   					if(rows.length > 0){
@@ -558,7 +547,7 @@ app.get('/register', function(req, res) {
 
 /*
 *
-*This rotes the login page
+*This routes the login page
 *
 */
 app.get('/login', function(req, res) {
@@ -620,6 +609,7 @@ app.post('/addidea', function(req, res) {
 	var cat = req.body.cat;
 	console.log(username)
 	var dpost = Math.floor(new Date() / 1000);
+	if(username == 'undefined'){ res.sendStatus('an error occured'); }
 	connection.getConnection(function(err, connection) {
 			var sql = 'insert into ideas (details, title,date_posted, owner, privacy, cards, up_date) values ('+ connection.escape(details) +','+
 			connection.escape(title)+','+connection.escape(dpost)+','+connection.escape(username)+','+
@@ -661,24 +651,33 @@ app.post('/voteidea', function(req, res){
 					sql2 = "select*from ideavote where idea_id="+pool.escape(ideaId)+" and voter="+pool.escape(user);
 					pool.query(sql2, function(err, rows){
 						if(rows.length < 1){
-							sql = "update ideas set up_date = dpost, vote_ups = vote_ups + 1 where id ="+pool.escape(ideaId);
+							sql = "update ideas set up_date = "+pool.escape(dpost)+", vote_ups = vote_ups + 1 where id ="+pool.escape(ideaId);
 							pool.query(sql, function(err, rows){
+								if(err) console.log(err);
 								usql = "insert into ideavote (voter, idea_id, vote_up, vote_down) values("+pool.escape(user)+","+pool.escape(ideaId)+",1,0)";
 								pool.query(usql, function(err,rows){
-									pool.release();
+									pool.query("select vote_ups, vote_downs from ideas where id ="+pool.escape(ideaId), function(err, rows){
+										vcrit = rows[0].vote_ups+","+rows[0].vote_downs;
+										res.send(vcrit);
+										pool.release();
+									});
 								});
 								//connection.release();
-							})
+							});
 						}
 						else{
 							if(rows[0].vote_up === 1){
 							}
 							else{
-								sql = "update ideas set up_date = dpost, vote_ups = vote_ups + 1, vote_downs = vote_downs -1 where id ="+pool.escape(ideaId);
+								sql = "update ideas set up_date = "+pool.escape(dpost)+", vote_ups = vote_ups + 1, vote_downs = vote_downs -1 where id ="+pool.escape(ideaId);
 								pool.query(sql, function(err, rows){
 								usql = "update ideavote set vote_up = vote_up + 1, vote_down = vote_down -1 where idea_id ="+pool.escape(ideaId);
 								pool.query(usql, function(err,rows){	
-								pool.release();								
+									pool.query("select vote_ups, vote_downs from ideas where id ="+pool.escape(ideaId), function(err, rows){
+										vcrit = rows[0].vote_ups+","+rows[0].vote_downs;
+										res.send(vcrit);
+										pool.release();
+									});							
 								});
 							});	
 							}
@@ -689,11 +688,15 @@ app.post('/voteidea', function(req, res){
 					sql2 = "select*from ideavote where idea_id="+pool.escape(ideaId)+" and voter="+pool.escape(user);
 					pool.query(sql2, function(err, rows){
 						if(rows.length < 1){
-							sql = "update ideas set up_date = dpost, vote_downs = vote_downs + 1 where id ="+pool.escape(ideaId);
+							sql = "update ideas set up_date = "+pool.escape(dpost)+", vote_downs = vote_downs + 1 where id ="+pool.escape(ideaId);
 							pool.query(sql, function(err, rows){
 								usql = "insert into ideavote (voter, idea_id, vote_up, vote_down) values("+pool.escape(user)+","+pool.escape(ideaId)+",0,1)";
 								pool.query(usql, function(err,rows){
-									pool.release();
+									pool.query("select vote_ups, vote_downs from ideas where id ="+pool.escape(ideaId), function(err, rows){
+										vcrit = rows[0].vote_ups+","+rows[0].vote_downs;
+										res.send(vcrit);
+										pool.release();
+									});
 								});
 								//connection.release();
 							});
@@ -703,26 +706,24 @@ app.post('/voteidea', function(req, res){
 
 							}
 							else{
-								sql = "update ideas set up_date = dpost, vote_ups = vote_ups - 1, vote_downs = vote_downs +1 where id ="+pool.escape(ideaId);
+								sql = "update ideas set up_date = "+pool.escape(dpost)+", vote_ups = vote_ups - 1, vote_downs = vote_downs +1 where id ="+pool.escape(ideaId);
 							pool.query(sql, function(err, rows){
 								usql = "update ideavote set vote_up = vote_up -1, vote_down = vote_down + 1 where idea_id ="+pool.escape(ideaId);
 								pool.query(usql, function(err,rows){
-									pool.release();
+									pool.query("select vote_ups, vote_downs from ideas where id ="+pool.escape(ideaId), function(err, rows){
+										vcrit = rows[0].vote_ups+","+rows[0].vote_downs;
+										res.send(vcrit);
+										pool.release();
+									});
 								});
 								//
-							})
+							});
 							}
 						}
 					})
 				}
 
 			})
-pool.query("select vote_ups, vote_downs from ideas where id ="+pool.escape(ideaId), function(err, rows){
-vcrit = rows[0].vote_ups+","+rows[0].vote_downs;
-//console.log(vcrit);
-res.send(vcrit);
-//connection.release();
-});
 
 		})
 });
@@ -754,7 +755,11 @@ app.post('/voteComment', function(req, res){
 							pool.query(sql, function(err, rows){
 								usql = "insert into commentvote (voter, comment_id, helpful, unhelpful) values("+pool.escape(user)+","+pool.escape(ideaId)+",1,0)";
 								pool.query(usql, function(err,rows){
-									pool.release();
+									pool.query("select helpful, unhelpful from comments where id ="+pool.escape(ideaId), function(err, rows){
+										vcrit = rows[0].helpful+","+rows[0].unhelpful;
+										res.send(vcrit);
+										pool.release();
+									});
 								});
 								//connection.release();
 							})
@@ -767,7 +772,11 @@ app.post('/voteComment', function(req, res){
 								pool.query(sql, function(err, rows){
 								usql = "update commentvote set helpful = helpful + 1, unhelpful = unhelpful -1 where comment_id ="+pool.escape(ideaId);
 								pool.query(usql, function(err,rows){	
-								pool.release();								
+									pool.query("select helpful, unhelpful from comments where id ="+pool.escape(ideaId), function(err, rows){
+										vcrit = rows[0].helpful+","+rows[0].unhelpful;
+										res.send(vcrit);
+										pool.release();
+									});						
 								});
 							});	
 							}
@@ -782,7 +791,11 @@ app.post('/voteComment', function(req, res){
 							pool.query(sql, function(err, rows){
 								usql = "insert into commentvote (voter, comment_id, helpful, unhelpful) values("+pool.escape(user)+","+pool.escape(ideaId)+",0,1)";
 								pool.query(usql, function(err,rows){
-									pool.release();
+									pool.query("select helpful, unhelpful from comments where id ="+pool.escape(ideaId), function(err, rows){
+										vcrit = rows[0].helpful+","+rows[0].unhelpful;
+										res.send(vcrit);
+										pool.release();
+									});
 								});
 								//connection.release();
 							});
@@ -796,7 +809,11 @@ app.post('/voteComment', function(req, res){
 							pool.query(sql, function(err, rows){
 								usql = "update commentvote set helpful = helpful -1, unhelpful = unhelpful + 1 where comment_id ="+pool.escape(ideaId);
 								pool.query(usql, function(err,rows){
-									pool.release();
+									pool.query("select helpful, unhelpful from comments where id ="+pool.escape(ideaId), function(err, rows){
+										vcrit = rows[0].helpful+","+rows[0].unhelpful;
+										res.send(vcrit);
+										pool.release();
+									});
 								});
 								//
 							})
@@ -806,12 +823,6 @@ app.post('/voteComment', function(req, res){
 				}
 
 			})
-pool.query("select helpful, unhelpful from comments where id ="+pool.escape(ideaId), function(err, rows){
-vcrit = rows[0].helpful+","+rows[0].unhelpful;
-//console.log(vcrit);
-res.send(vcrit);
-//connection.release();
-});
 
 		})
 });
@@ -875,7 +886,7 @@ app.post('/register',function(req,res){
 			var sql = 'SELECT * FROM user where username = '+connection.escape(username);
   			connection.query( sql, function(err, rows) {
   				if(err){
-  					console.log(err);
+  					//console.log(err);
   				}
   				else{
   					//console.log(r
@@ -893,14 +904,14 @@ app.post('/register',function(req,res){
 								+','+ connection.escape(sessionID) +')';
 				  			connection.query( sql, function(err, rows) {
 				  				if(err){
-				  					console.log(err);
+				  					//console.log(err);
 				  				}
 				  				else{
 				  					ses = req.session;
 				  					ses.user = username;
 				  					//console.log(ses.user);
 				  					ses.sessionID = sessionID;
-				  					res.redirect('/dashboard');
+				  					res.redirect('/index');
 				  				}
 				    		connection.release();
 				  			});
@@ -912,6 +923,20 @@ app.post('/register',function(req,res){
 	}         
 })
 
+
+/*
+*
+*Route every 404 error to error page
+*
+*/
+
+
+app.use(function(req, res, next){
+  // the status option, or res.statusCode = 404
+  // are equivalent, however with the option we
+  // get the "status" local available as well
+  res.render('main/error', { status: 404, url: req.url });
+});
 
 
 
