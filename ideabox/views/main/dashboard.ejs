@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Developed By M Abdur Rokib Promy">
+    <meta name="description" content="">
     <meta name="author" content="cosmic">
-    <meta name="keywords" content="Bootstrap 3, Template, Theme, Responsive, Corporate, Business">
+    <meta name="keywords" content="">
     <link rel="shortcut icon" href="img/favicon.png">
 
     <title>dashboard</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="dependencies/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/theme.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
@@ -30,6 +30,7 @@
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
+	  <% include ../dependencies/functions %>
     <![endif]-->
   </head>
 
@@ -37,30 +38,90 @@
     <!--header start-->
     <% include ../dependencies/head %>
     
-    
 <!--header end-->
 
-    <!--breadcrumbs start-->
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-sm-4">
-                    <h1>Welcome to the dashboard</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div style="height:100px; background:#2C3E50; padding-top:15px; padding-left:100px;"><h4 style="color:#fff"><i class="fa fa-user"></i>  <%= un %> / dashboard</h4></div>
     <!--breadcrumbs end-->
 
     <!--container start--><div class="registration-bg">
-    <div class="container">
     
-    <h1>Home content</h1>
+    <div class="row" style="padding-right:25px; padding-left:25px; padding-bottom:60px;">
+		<div class="col-sm-8" style="height:auto; padding:10px" align="left">		
+		
+		
+		<% for(var i=0; i < rows.length; i++) { %>
+		
+<div style="background:#FFF; padding:6px;" id="jashCont<%= rows[i].cominId %>">
+<div>
+<ul style="float:right; outline:none; list-style:none; padding-left:9px;">
+	<li style="padding:1px;" onclick="delpost(<%= rows[i].cominId %>, '<%= key %>')"><h4 class="btn btn-danger"><i class="fa fa-trash-o"></i></h4></li>
+    <li style="padding:1px;" onclick="edit(<%= rows[i].cominId %>, '<%= key %>')"><h4 class="btn btn-primary"><i class="fa fa-edit"></i></h4></li>
+    <li style="padding:1px;"><h4 id="lock<%= rows[i].cominId %>" onclick="priva(true,<%= rows[i].cominId %>, '<%= key %>', this)" class="btn <% if(rows[i].privacy === 1){ %>  btn-default<%}else{%>btn-success<%}%>"><i class="fa fa-lock"></i></h4></li>
+    <li style="padding:1px;"><h4 id="public<%= rows[i].cominId %>" onclick="priva(false,<%= rows[i].cominId %>, '<%= key %>', this)" class="btn <% if(rows[i].privacy === 0){ %>  btn-default<%}else{%>btn-success<%}%>"><i class="fa fa-globe"></i></h4></li>
+ </ul>
+</div>
+<div>
+<div style="color:black; font-size:11px; font-weight:bold; padding-right:50px; padding:7px" align="right"><i class="fa fa-tags"></i> <%= rows[i].card %></div>
+<img src="<% if (rows[i].avatar === ''){ %> <%- 'avatar/dude.png' %> <%} else { %> <%- rows[i].avatar %><% } %>" alt="Olaniyan Elias Akinola"><span class="udesc" style=" font-weight:bold; padding-left:12px; color:#0E5F76"><%= rows[i].surname+' '+rows[i].firstname %> 
+<small class="text-muted" style="color:#858585; font-weight:lighter"> <%- timer(rows[i].date_posted) %></small></span></div>
+<div><h3 style='word-wrap:break-word' onclick="turn('textbox', this, '<%= key %>', <%= rows[i].cominId %>)"><%= rows[i].title %></h3></div>
+    <div style="padding:10px"><q style='word-wrap:break-word' onclick="turn('textarea', this, '<%= key %>', <%= rows[i].cominId %>)"><%- rows[i].details %></q></div>
+    <div style="padding:4px; font-size:16px; border-top:#F1F2F7 solid 3px; font-weight:" align="center"><span id="vup<%= rows[i].cominId %>"><%= rows[i].vote_ups %></span> think this is <span style="color:#0A701C; cursor:pointer" onClick="vote(true,<%= rows[i].cominId %>)"><span id="thumbpos<%= rows[i].cominId %>"><% if(rows[i].vote_down === null) { %> <i class="fa fa-thumbs-o-up"><%}else{%><i class="fa fa-thumbs-up"><%}%></i></span> Great</span><span style="padding-left:50px; padding-right:50px;"> | </span><span id="vdown<%= rows[i].cominId %>"><%= rows[i].vote_downs %></span> think this is <span style="color:#F00; cursor:pointer" onClick="vote(false,<%= rows[i].cominId %>)"><span id="thumbneg<%= rows[i].cominId %>"><% if(rows[i].vote_down === null) { %> <i class="fa fa-thumbs-o-down"><%}else{%><i class="fa fa-thumbs-down"> <%}%></i></span> Not great</span></div>
     
+    <div id="commentplace<%= rows[i].cominId %>" style="display:none">
+    <blockquote>
+	<h3><i class="fa fa-comments"></i> Comments</h3>
+	<hr class="divider" />
+	<div id="userc<%= rows[i].cominId %>"><div align="center" style="padding:10px";><i class="fa fa-spinner fa-spin fa-3x"></i></div></div>
+	<div style="border:#F2F2F2 thin solid; padding:8px;">
+    <h4>What do you think?</h4>
+    <div><textarea class="form-control" style="border:none; outline:none; resize:none; height:60px" onmouseenter="this.focus" id="tarea<%= rows[i].cominId %>"></textarea>
+    <div align="right"><button class="btn btn-primary" onClick="addcomment(<%= rows[i].cominId %>)" ><i class="fa fa-comment"></i> Add a comment</button></div>
+    </div>
+    </div>
+	</blockquote>
+    </div>
+    
+    
+	
+    <div align="left"><div style="width:140px; padding:8px; padding-left:8px; border-radius:0 6px 6px 0px; font-weight:bold; background:#797979; color:#FFF; cursor:pointer" onClick="fetchcomment(<%= rows[i].cominId %>)"><i class="fa fa-comments"></i> Comments</div></div>
+</div><br/>
+	<% } %>	
+		
+		
+		
+		
+		
+		
+		<div></div></div>	
+		
+		<div class="col-sm-4" style="max-height:auto; padding:10px"><div style="height:100%; background:#fff">
+		<div style="background:#48cfad; color:#fff; padding:9px;" align ="center">
+		<h3 style="text-transform:uppercase">Go to:</h3>
+		</div>
+		
+		
+		<div style="padding:9px">
+		<style>
+			ul li{
+				padding:7px;
+			}
+		</style>
+			<ul style="list-style:none; padding:9px; padding-left:15px">
+    <li style="cursor:pointer; font-weight:bold; font-size:12px" ><i class="fa fa-angle-right"></i> Settings
+    </li>
+</ul>
+		</div>
+		</div>
+		</div>
+	</div>
     
     
     
     </div>
+	
+	
+	
      </div>
     <!--container end-->
 
@@ -80,7 +141,7 @@
     <script type="text/javascript" src="js/hover-dropdown.js"></script>
     <script defer src="js/jquery.flexslider.js"></script>
     <script type="text/javascript" src="assets/bxslider/jquery.bxslider.js"></script>
-
+	<script src="self/siteplayer.js"></script>
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/link-hover.js"></script>
 

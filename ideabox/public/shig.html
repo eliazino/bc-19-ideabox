@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ggg</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/flexslider.css"/>
+    <link href="assets/bxslider/jquery.bxslider.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/animate.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    
+
+      <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+<div>
+<div align="center" style="padding:2px; padding-bottom:4px; border-bottom:#D3DFFE thick solid; cursor:pointer" id="jilla"><h3 style="color:#0E5F76"><i class="fa fa-lightbulb-o" style="color:#FC0"></i> Create an idea</h3></div>
+<div id="shakeF" style="display:none">
+<br />
+<span style="padding:4px; font-size:12px">You are Posting to <span class="btn btn-sm btn-success" id="public"><i class="fa fa-globe"></i> Public</span> |  <span class="btn btn-sm btn-default" id="private"><i class="fa fa-lock"></i> Private</span></span>
+<div class="form-group">
+<input type="hidden" value="1" id="privacy" />
+<label class="control-label">Input Title: </label><input type="text" class="form-control" id="title"/><br />
+<label class="control-label">Choose category: </label><select id="categories"><option value="1">This is a value</option><option value="1">This is a value</option></select><br />
+<label class="control-label">Details: <i>(Markddown supported)</i></label>
+<textarea class="form-control" style="width:100%; height:100px; resize:none; outline:none;" id="details"></textarea>
+
+<div style="border:#EEE thin solid; overflow:auto; height:100px; background:#F7F7F7"><div style="padding:4px; border-bottom:#EEE thin solid"><b><i class="fa fa-eye"></i> Preview</b></div>
+<div id="preview" style="padding:6px;"></div>
+</div><div style="padding-top:10px;  padding-right:10px;" align="right">
+<button class="btn btn-primary" id="createI">Upload content</button></div>
+</div>
+</div>
+</div>
+
+
+<div style="background:#FFF; padding:6px;">
+<div>
+<ul style="float:right; outline:none; list-style:none">
+	<li><h4 class="btn btn-danger"><i class="fa fa-trash-o"></i></h4></li>
+    <li><h4 class="btn btn-primary"><i class="fa fa-edit"></i></h4></li>
+    <li><h4 class="btn btn-default"><i class="fa fa-lock"></i></h4></li>
+    <li><h4 class="btn btn-success"><i class="fa fa-globe"></i></h4></li>
+ </ul>
+</div>
+<div><img src="avatar/dude.png" alt="Olaniyan Elias Akinola"><span class="udesc" style=" font-weight:bold; padding-left:12px; color:#0E5F76">Olaniyan Elias Akinola <small class="text-muted" style="color:#858585; font-weight:lighter"><i class="fa fa-clock"></i> about 3 months ago</small></span></div>
+<div><h3>This is a title</h3></div>
+    <div style="padding:5px"><q> *!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;</q></div>
+    <div style="padding:4px; font-size:16px; font-weight:" align="center">14 think this is <span style="color:#0A701C; cursor:pointer" onclick="like()"><i class="fa fa-thumbs-up"></i> Great</span><span style="padding-left:50px; padding-right:50px;"> | </span>3 think this is <span style="color:#F00; cursor:pointer" onclick="unlike()"><i class="fa fa-thumbs-down"></i> Not great</span></div>
+    
+    <blockquote style="display:none">
+    <h3>Comments</h3>
+    <hr class="divider" />
+    <div style="background:#FDFDFD; padding:6px; border-bottom:#E5E5E5 thin solid">
+    <div><img src="avatar/dude.png" alt="Olaniyan Elias Akinola"><span class="udesc" style=" font-weight:bold; padding-left:12px; color:#0E5F76">Olaniyan Elias Akinola </span></div>
+    <div style="padding:5px">*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;<br />
+      /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;<br />
+      /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;</div>
+    <div style="padding:4px; font-size:12px; font-weight:bold" align="center">14 voted <span style="color:#0A701C; cursor:pointer" onclick="like()"><i class="fa fa-arrow-up"></i> Helpful</span><span style="padding-left:50px; padding-right:50px;"> | </span>3 voted <span style="color:#F00; cursor:pointer" onclick="unlike()"><i class="fa fa-arrow-down"></i> Unhelpful</span></div></div>
+    
+    
+    <div style="background:#FDFDFD; padding:6px; border-bottom:#E5E5E5 thin solid">
+    <div><img src="avatar/dude.png" alt="Olaniyan Elias Akinola"><span class="udesc" style=" font-weight:bold; padding-left:12px; color:#0E5F76">Olaniyan Elias Akinola </span></div>
+    <div style="padding:5px">This is the body </div>
+    <div style="padding:4px; font-size:12px; font-weight:bold" align="center">14 voted <span style="color:#0A701C; cursor:pointer" onclick="helpful()"><i class="fa fa-arrow-up"></i> Helpful</span><span style="padding-left:50px; padding-right:50px;"> | </span>3 voted <span style="color:#F00; cursor:pointer" onclick="unhelpful()"><i class="fa fa-arrow-down"></i> Unhelpful</span></div></div>
+	</blockquote>
+    <div align="left"><div style="width:10%; padding:3px; padding-left:8px; border-radius:0 6px 6px 0px; font-weight:bold; background:#797979; color:#FFF; cursor:pointer" onclick="open()"><i class="fa fa-comment"></i> Comments</div></div>
+</div>
+		
+
+
+
+<ul style="list-style:none; padding:9px; padding-left:15px">
+    <li style="cursor:pointer" onclick="reveal('hid1')"><i class="fa fa-angle-right"></i> Science / Technology / Engineering
+    	<blockquote id="hid1" style="display:none"><ul style="list-style:square">
+        	<li>9 user subscribed to this</li>
+            <li>has 45 posts</li>
+        </ul></blockquote>
+    </li>
+    <li><i class="fa fa-angle-right"></i> Finances / Entrepreneur / Economics / Bussiness /
+    	<blockquote><ul style="list-style:square">
+        	<li>9 user subscribed to this</li>
+            <li>has 45 posts</li>
+        </ul></blockquote>
+    </li>
+<li><i class="fa fa-angle-right"></i> Meditation / Mantra / Self-development / Philosphy...</li>
+<li><i class="fa fa-angle-right"></i> Relationship / Psychology / Social / Behaviour</li>
+<li><i class="fa fa-angle-right"></i> Management / Ledership / Control / Fellowship</li>
+<li><i class="fa fa-angle-right"></i> History / Myth / Belief</li>
+<li><i class="fa fa-angle-right"></i> Education / Schooling / Knowledge / Feedback</li>
+<li><i class="fa fa-angle-right"></i> Lifestyle / Food / Fashion / Health /Hygiene</li>
+</ul>
+
+
+<p></p>
+
+<blockquote id="comment" style="display:">
+    <h3>Comments</h3>
+    <hr class="divider" />
+    <div style="background:#FDFDFD; padding:6px; border-bottom:#E5E5E5 thin solid">
+    <div><img src="avatar/dude.png" alt="Olaniyan Elias Akinola"><span class="udesc" style=" font-weight:bold; padding-left:12px; color:#0E5F76">Olaniyan Elias Akinola </span></div>
+    <div style="padding:5px">*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;<br />
+      /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;<br />
+      /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;</div>
+    <div style="padding:4px; font-size:12px; font-weight:bold" align="right">14 voted <span style="color:#0A701C; cursor:pointer" onclick="cvote(true,1)"><i class="fa fa-arrow-up"></i> Helpful</span><span style="padding-left:50px; padding-right:50px;"> | </span>3 voted <span style="color:#F00; cursor:pointer" onclick="cvote(true,1)"><i class="fa fa-arrow-down"></i> Unhelpful</span></div></div><br />
+
+    <div style="border:#F2F2F2 thin solid; padding:8px;">
+    <h4>What do you think?</h4>
+    <div><textarea class="form-control" style="border:none; outline:none; resize:none; height:60px" onmouseenter="this.focus"></textarea>
+    <div align="right"><button class="btn btn-primary" ><i class="fa fa-comment"></i> Add a comment</button></div>
+    </div>
+    </div>
+    </blockquote>
+
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script src="js/jquery.js"></script>
+<script type="text/javascript">
+var simplemde = new SimpleMDE({ element: document.getElementById("details")});
+$(document).ready(function(){
+  $("#jilla").click(function(){
+	$("#shakeF").slideToggle("details");
+  });
+});
+</script>
+</body>
+</html>

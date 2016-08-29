@@ -9,20 +9,17 @@
           <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                   <li class="dropdown">
-                      <a class="dropdown-toggle" data-close-others="false" data-delay="0" data-hover=
-                      "dropdown" data-toggle="dropdown" href="index">Home <i class="fa fa-home"></i>
+                      <a href="index">Home <i class="fa fa-home"></i>
                       </a>
                   </li>
 
                   <li class="dropdown">
-                      <a class="dropdown-toggle" data-close-others="false" data-delay="0" data-hover=
-                      "dropdown" data-toggle="dropdown" href="#">Dashboard <i class="fa fa-dashboard"></i>
+                      <a  href="/dashboard">Dashboard <i class="fa fa-dashboard"></i>
                       </a>
                   </li>
 
                   <li class="dropdown">
-                      <a class="dropdown-toggle" data-close-others="false" data-delay="0" data-hover=
-                      "dropdown" data-toggle="dropdown" href="#">Settings <i class="fa fa-gears"></i>
+                      <a href="/settings">Settings <i class="fa fa-gears"></i>
                       </a>
                   </li>
 
@@ -40,7 +37,7 @@
                       <a href="about">About <i class="fa fa-question"></i></a>
                   </li>
 
-                  <li><input class="form-control search" placeholder=" Search" type="text"></li>
+                  <li><form name="search" method="post" action="search"><input name="q" class="form-control search" placeholder=" Search" type="text"></form></li>
               </ul>
           </div>
       </div>
