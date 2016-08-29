@@ -41,5 +41,5 @@ We allow you to search our database of ideas, use the search bar to search and p
 ## Markdown Feature
 Thanks to [NextStepWebs](https://github.com/NextStepWebs/simplemde-markdown-editor) for letting me use thier markdown editor and [Chjj](https://github.com/chjj/marked) for letting me use thier marked markdown parser
 ## Database
-This app runs on MySQL database check out the table here [ideahub.sql](https://github.com/eliazino/bc-19-ideabox/ideahub.sql) in order to enable future better search feature, the table engine is MyISAM
+This app runs on MySQL database; check out the table here [ideahub.sql](https://github.com/eliazino/bc-19-ideabox/blob/Development-branch/ideahub.sql). In order to enable future better search feature, the table engine is MyISAM
   
