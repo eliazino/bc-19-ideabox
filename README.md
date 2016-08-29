@@ -24,3 +24,22 @@ Avatars are small icon that display in place of your real picture. You can chang
 We allow you to search our database of ideas, use the search bar to search and press enter.
 
 
+# Requirements and Technical details
+ The App is built with NodeJS, mysql. The dependencies are :
+ ``` json
+ "dependencies": {
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.1",
+    "express": "^4.14.0",
+    "marked": "^0.3.6",
+    "mysql": "^2.11.1",
+    "node-twitter-api": "^1.7.4",
+    "sha1": "^1.1.1"
+  }
+  ```
+  
+## Markdown Feature
+Thanks to [NextStepWebs](https://github.com/NextStepWebs/simplemde-markdown-editor) for letting me use thier markdown editor and [Chjj](https://github.com/chjj/marked) for letting me use thier marked markdown parser
+## Database
+This app runs on MySQL database check out the table here [ideahub.sql](https://github.com/eliazino/bc-19-ideabox/ideahub.sql) in order to enable future better search feature, the table engine is MyISAM
+  
